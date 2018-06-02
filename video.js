@@ -2,8 +2,8 @@ window.onload = function() {
 	var option = {
 		audio: false,
 		video: {
-			width : window.screen.width,
-			height : window.screen.height,
+			width : 1280,
+			height : 720,
 			facingMode : "environment"
 		}
 	};
