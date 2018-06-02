@@ -1,12 +1,23 @@
-// Prefer camera resolution nearest to 1280x720.
-var constraints = { audio: true, video: { width: 1280, height: 720 } }; 
+(function() {
+    var video, localMediaStream;
 
-navigator.mediaDevices.getUserMedia(constraints)
-.then(function(mediaStream) {
-  var video = document.querySelector('video');
-  video.srcObject = mediaStream;
-  video.onloadedmetadata = function(e) {
-    video.play();
-  };
-})
-.catch(function(err) { document.write(err.name + ": " + err.message); }); // always check for errors at the end.
+    window.URL = window.URL || window.webkitURL;
+    navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+    video = document.querySelector('video');
+
+    document.querySelector('button#capture').addEventListener('click', function () {
+        navigator.getUserMedia({audio: true, video: true}, function(stream) {
+            localMediaStream = stream;
+            video.src = window.URL.createObjectURL(stream);
+        }, function(e) {
+            console.log(e);
+        });
+    });
+
+    document.querySelector('button#stop').addEventListener('click', function(e) {
+        video.pause();
+        localMediaStream.stop();
+    });
+}());
