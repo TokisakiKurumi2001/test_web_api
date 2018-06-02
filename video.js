@@ -1,20 +1,29 @@
-// Prefer camera resolution nearest to 1280x720.
-var constraints = { audio: false, 
-					video: {
-						width: {ideal: 1250},
-						height : {ideal : 720},
-						facingMode : {
-							exact : "environment"
-						}   
-					}
-				};
+window.onload = function() {
+	var option = {
+		audio: false,
+		video: {
+			width : window.screen.width,
+			height : window.screen.height,
+			facingMode : "environment"
+		}
+	};
 
-navigator.mediaDevices.getUserMedia(constraints)
-.then(function(mediaStream) {
-  var video = document.querySelector('video');
-  video.srcObject = mediaStream;
-  video.onloadedmetadata = function(e) {
-    video.play();
-  };
-})
-.catch(function(err) { document.write(err.name + ": " + err.message); }); // always check for errors at the end.
+	// the code will run if the broswer support, otherwise, use the cacth exception
+	// pass the set for camera with `option`
+	navigator.mediaDevices.getUserMedia(option)
+	.then(function(mediaStream) {
+		// if the code run successfully, .then function execute
+		// get the element video
+		var video = document.querySelector('video');
+		// pass in camera transmit to the video-element
+		video.srcObject = mediaStream;
+		// when it load completely, run the video
+		video.onloadedmetadata = function(e) {
+			video.play();
+		};
+	})
+	.catch(function(err) {
+		// if there is an error, document.write to page, we cannot see anything console.log if we run on mobile
+		document.write(err.name + " : " + err.message);
+	});
+}
