@@ -1,7 +1,7 @@
 // Prefer camera resolution nearest to 1280x720.
 var constraints = { audio: false, 
 					video: {
-						width: {ideal: 1280},
+						width: {ideal: 1250},
 						height : {ideal : 720},
 						facingMode : {
 							exact : "environment"
